@@ -1,15 +1,15 @@
-import ytsr from "ytsr";
-import ytdl from "ytdl-core";
-import ytpl from "ytpl";
+import ytsr from 'ytsr';
+import ytdl from 'ytdl-core';
+import ytpl from 'ytpl';
 
-import { youtubeVideoRegex } from "../constant/regex";
+import { youtubeVideoRegex } from '../constant/regex';
 
 // Tìm video bằng từ khoá và trả về id video nếu tìm thấy hoặc trả về tin nhắn lỗi.
 const searchVideo = (keyword: string) => {
   try {
     return ytsr(keyword, { pages: 1 })
       .then((result) => {
-        const filteredRes = result.items.filter((e) => e.type === "video");
+        const filteredRes = result.items.filter((e) => e.type === 'video');
         if (filteredRes.length === 0) throw "🔎 Can't find video!";
         const item = filteredRes[0] as {
           id: string;
@@ -20,7 +20,7 @@ const searchVideo = (keyword: string) => {
         throw error;
       });
   } catch (e) {
-    throw "❌ Invalid params";
+    throw '❌ Invalid params';
   }
 };
 
@@ -36,7 +36,7 @@ export interface Resource {
 // Lấy thông tin của 1 video bằng nội dung truyền vào. URL hoặc từ khoá
 export const getVideoDetails = async (content: string): Promise<Resource> => {
   const parsedContent = content.match(youtubeVideoRegex);
-  let id = "";
+  let id = '';
 
   if (!parsedContent) {
     id = await searchVideo(content);
@@ -60,7 +60,7 @@ export const getVideoDetails = async (content: string): Promise<Resource> => {
       };
     })
     .catch(() => {
-      throw "❌ Error";
+      throw '❌ Error';
     });
 };
 
@@ -73,7 +73,7 @@ interface Playlist {
 // Lấy danh sách video và thông tin 1 playlist
 export const getPlaylist = async (url: string): Promise<Playlist> => {
   try {
-    const id = url.split("?")[1].split("=")[1];
+    const id = url.split('?')[1].split('=')[1];
     const playlist = await ytpl(id);
 
     const resources: Resource[] = [];
@@ -94,6 +94,6 @@ export const getPlaylist = async (url: string): Promise<Playlist> => {
       resources,
     };
   } catch (e) {
-    throw "❌ Invalid playlist!";
+    throw '❌ Invalid playlist!';
   }
 };

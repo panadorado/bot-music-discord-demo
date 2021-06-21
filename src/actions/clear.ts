@@ -1,17 +1,17 @@
 // Xoá toàn bộ list video đang đợi phát
-import { Message } from "discord.js";
+import { Message } from 'discord.js';
 
-import { servers } from "../data/server";
+import { servers } from '../data/server';
 
 export default {
-  name: "clear",
+  name: 'clear',
   execute: (message: Message): void => {
     const server = servers[message.guild.id];
     if (server) {
       server.queue = [];
-      message.channel.send("🧹 Đã xóa khỏi danh sách hàng chờ !");
+      message.channel.send('🧹 Danh sách phát đã được dọn dẹp! ');
     } else {
-      message.channel.send("❌ Không tìm thấy gì trong danh sách hàng chờ !");
+      message.channel.send('❌ Không có gì để xóa ở đây cả !');
     }
   },
 };

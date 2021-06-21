@@ -1,10 +1,10 @@
-import { Message, VoiceConnection, MessageEmbed } from "discord.js";
-import ytdl from "ytdl-core";
+import { Message, VoiceConnection, MessageEmbed } from 'discord.js';
+import ytdl from 'ytdl-core';
 
-import { servers } from "../data/server";
-import { getVideoDetails, getPlaylist } from "../services/youtube";
-import { formatTimeRange } from "../utils/time";
-import { youtubePlaylistRegex } from "../constant/regex";
+import { servers } from '../data/server';
+import { getVideoDetails, getPlaylist } from '../services/youtube';
+import { formatTimeRange } from '../utils/time';
+import { youtubePlaylistRegex } from '../constant/regex';
 
 // Đảm nhiệm stream nhạc và chuyển bài khi kết thúc
 const play = (connection: VoiceConnection, message: Message) => {
@@ -16,11 +16,11 @@ const play = (connection: VoiceConnection, message: Message) => {
   };
 
   server.dispatcher = connection.play(
-    ytdl(song.resource.url, { filter: "audioonly" })
+    ytdl(song.resource.url, { filter: 'audioonly' }),
   );
   server.queue.shift();
   // Phát hiện việc bài hát kết thúc
-  server.dispatcher.on("finish", () => {
+  server.dispatcher.on('finish', () => {
     if (server.queue[0]) play(connection, message);
     else {
       server.playing = null;
@@ -31,14 +31,14 @@ const play = (connection: VoiceConnection, message: Message) => {
 };
 
 export default {
-  name: "play",
+  name: 'play',
   execute: (message: Message, content: string): void => {
     if (!content)
       message.channel.send(
-        "❌ Bạn cần cung cấp URL Youtube hoặc tên của video \n\n✅ Ví dụ:!play Shape of You "
+        '❌ Bạn cần cung cấp URL Youtube hoặc tên của video\n\n✅ Ví dụ: !play Shape of You ',
       );
     else if (!message.member.voice.channel)
-      message.channel.send("❌ Bạn phải ở trong một kênh thoại !");
+      message.channel.send('❌ Bạn phải ở trong một kênh voice ! ');
     else {
       if (!servers[message.guild.id])
         servers[message.guild.id] = {
@@ -59,19 +59,19 @@ export default {
             });
 
             const messageEmbed = new MessageEmbed()
-              .setColor("#0099ff")
+              .setColor('#0099ff')
               .setTitle(result.title)
               .setAuthor(
-                `Đã thêm vào hàng chờ của danh sách trình phát ${message.member.displayName}`
+                `Đã thêm danh sách phát bởi: ${message.member.displayName}`,
               )
               .setThumbnail(result.thumbnail)
               .addFields(
-                { name: "Tác giả", value: result.author, inline: true },
+                { name: 'Tác giả', value: result.author, inline: true },
                 {
-                  name: "Số lượng video",
+                  name: 'Tổng video trong hàng đợi',
                   value: resources.length,
                   inline: true,
-                }
+                },
               );
 
             message.channel.send(messageEmbed).then(() => {
@@ -97,19 +97,21 @@ export default {
               resource: result,
             });
             const messageEmbed = new MessageEmbed()
-              .setColor("#0099ff")
+              .setColor('#0099ff')
               .setTitle(result.title)
-              .setAuthor(`Thềm vào danh sách chờ của ${message.member.displayName}`)
+              .setAuthor(
+                `Đã thêm danh sách phát bởi: ${message.member.displayName}`,
+              )
               .setThumbnail(result.thumbnail)
               .addFields(
-                { name: "Kênh", value: result.author, inline: true },
+                { name: 'Kênh', value: result.author, inline: true },
                 {
-                  name: "Thời lượng",
+                  name: 'Thời lượng',
                   value: formatTimeRange(result.length),
                   inline: true,
-                }
+                },
               )
-              .addField("Vị trí theo thứ tự", server.queue.length, true);
+              .addField('Tổng video trong hàng đợi', server.queue.length, true);
 
             message.channel.send(messageEmbed).then(() => {
               if (!message.guild.voice)
