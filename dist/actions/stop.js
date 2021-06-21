@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = require("../data/server");
 exports.default = {
-    name: "stop",
+    name: 'stop',
     execute: (message) => {
         const server = server_1.servers[message.guild.id];
         if (message.guild.voice) {
@@ -13,15 +13,15 @@ exports.default = {
                     }
                     server.playing = null;
                     server.dispatcher.end();
-                    message.channel.send("Kết thúc trình phát và rời khỏi kênh voice");
+                    message.channel.send('Kết thúc và rời khỏi kênh voice !');
                 }
             }
             else
-                message.channel.send("❌ Nothing to stop!");
+                message.channel.send('❌ Không có gì để dừng phát !');
             if (message.guild.voice.connection)
                 message.guild.voice.connection.disconnect();
         }
         else
-            message.channel.send("❌ Nothing to stop!");
+            message.channel.send('❌ Không có gì để dừng phát !');
     },
 };

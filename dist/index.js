@@ -17,49 +17,61 @@ const stop_1 = __importDefault(require("./actions/stop"));
 const clear_1 = __importDefault(require("./actions/clear"));
 const port = process.env.PORT || 3000;
 const server = express_1.default();
-const url = ""; // Đường dẫn của app bạn trên Heroku
+const url = 'https://discordbot-music-ss.herokuapp.com/'; // Đường dẫn của app bạn trên Heroku
 const bot = () => {
     const client = new discord_js_1.Client();
     const token = process.env.TOKEN;
-    const prefix = "!";
-    client.on("message", (message) => {
-        const args = message.content.substring(prefix.length).split(" ");
+    const prefix = '!';
+    client.on('message', (message) => {
+        const args = message.content.substring(prefix.length).split(' ');
         const content = message.content.substring(prefix.length + args[0].length);
-        if (message.content[0] === "!") {
+        //console.log(content);
+        const arrType = [`Nhạc: ${content}`, `Youtube: ${content}`];
+        setInterval(() => {
+            const index = Math.floor(Math.random() * arrType.length);
+            client.user.setActivity(arrType[index]);
+        }, 10000);
+        if (message.content[0] === '!') {
             switch (args[0]) {
-                // Tại đây sẽ đặt các case mà bot cần thực hiện như play, pause, resume,....
-                case play_1.default.name:
+                case play_1.default.name: {
                     play_1.default.execute(message, content);
                     break;
-                case skip_1.default.name:
+                }
+                case skip_1.default.name: {
                     skip_1.default.execute(message);
                     break;
-                case nowplaying_1.default.name.toString():
+                }
+                case nowplaying_1.default.name.toString(): {
                     nowplaying_1.default.execute(message);
                     break;
-                case pause_1.default.name:
+                }
+                case pause_1.default.name: {
                     pause_1.default.execute(message);
                     break;
-                case resume_1.default.name:
+                }
+                case resume_1.default.name: {
                     resume_1.default.execute(message);
                     break;
-                case stop_1.default.name:
+                }
+                case stop_1.default.name: {
                     stop_1.default.execute(message);
                     break;
-                case clear_1.default.name:
+                }
+                case clear_1.default.name: {
                     clear_1.default.execute(message);
                     break;
+                }
             }
         }
     });
-    client.on("ready", () => {
-        console.log("🏃‍♀️ Super Sick is online! 💨");
+    client.on('ready', () => {
+        console.log('🏃‍♀️ Super Sick is online! 💨');
     });
-    client.once("reconnecting", () => {
-        console.log("🔗 Reconnecting!");
+    client.once('reconnecting', () => {
+        console.log('🔗 Reconnecting!');
     });
-    client.once("disconnect", () => {
-        console.log("🛑 Disconnect!");
+    client.once('disconnect', () => {
+        console.log('🛑 Disconnect!');
     });
     client.login(token);
 };

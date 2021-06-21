@@ -22,7 +22,7 @@ const searchVideo = (keyword) => {
     try {
         return ytsr_1.default(keyword, { pages: 1 })
             .then((result) => {
-            const filteredRes = result.items.filter((e) => e.type === "video");
+            const filteredRes = result.items.filter((e) => e.type === 'video');
             if (filteredRes.length === 0)
                 throw "🔎 Can't find video!";
             const item = filteredRes[0];
@@ -33,13 +33,13 @@ const searchVideo = (keyword) => {
         });
     }
     catch (e) {
-        throw "❌ Invalid params";
+        throw '❌ Invalid params';
     }
 };
 // Lấy thông tin của 1 video bằng nội dung truyền vào. URL hoặc từ khoá
 const getVideoDetails = (content) => __awaiter(void 0, void 0, void 0, function* () {
     const parsedContent = content.match(regex_1.youtubeVideoRegex);
-    let id = "";
+    let id = '';
     if (!parsedContent) {
         id = yield searchVideo(content);
     }
@@ -59,14 +59,14 @@ const getVideoDetails = (content) => __awaiter(void 0, void 0, void 0, function*
         };
     })
         .catch(() => {
-        throw "❌ Error";
+        throw '❌ Error';
     });
 });
 exports.getVideoDetails = getVideoDetails;
 // Lấy danh sách video và thông tin 1 playlist
 const getPlaylist = (url) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = url.split("?")[1].split("=")[1];
+        const id = url.split('?')[1].split('=')[1];
         const playlist = yield ytpl_1.default(id);
         const resources = [];
         playlist.items.forEach((item) => {
@@ -86,7 +86,7 @@ const getPlaylist = (url) => __awaiter(void 0, void 0, void 0, function* () {
         };
     }
     catch (e) {
-        throw "❌ Invalid playlist!";
+        throw '❌ Invalid playlist!';
     }
 });
 exports.getPlaylist = getPlaylist;
