@@ -17,7 +17,7 @@ const stop_1 = __importDefault(require("./actions/stop"));
 const clear_1 = __importDefault(require("./actions/clear"));
 const port = process.env.PORT || 3000;
 const server = express_1.default();
-const url = 'https://discordbot-music-ss.herokuapp.com/'; // Đường dẫn của app bạn trên Heroku
+const url = process.env.URL; // Đường dẫn của app bạn trên Heroku
 const bot = () => {
     const client = new discord_js_1.Client();
     const token = process.env.TOKEN;
