@@ -14,7 +14,7 @@ import clear from './actions/clear';
 
 const port = process.env.PORT || 3000;
 const server = express();
-const url = 'https://discordbot-music-ss.herokuapp.com/'; // Đường dẫn của app bạn trên Heroku
+const url = process.env.URL; // Đường dẫn của app bạn trên Heroku
 
 const bot = (): void => {
   const client = new Client();
