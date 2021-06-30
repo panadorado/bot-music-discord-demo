@@ -25,13 +25,6 @@ const bot = (): void => {
     const args = message.content.substring(prefix.length).split(' ');
     const content = message.content.substring(prefix.length + args[0].length);
 
-    //console.log(content);
-    const arrType = [`Nhạc: ${content}`, `Youtube: ${content}`];
-    setInterval(() => {
-      const index = Math.floor(Math.random() * arrType.length);
-      client.user.setActivity(arrType[index]);
-    }, 10000);
-
     if (message.content[0] === '!') {
       switch (args[0]) {
         case play.name: {
