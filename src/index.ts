@@ -76,6 +76,10 @@ const bot = (): void => {
 
 server.disable('x-powered-by');
 
+server.get('/', (req, res) => {
+  res.send('🏃‍♀️ Super Sick is online! 💨')
+})
+
 server.listen(port, () => {
   herokuAwake(url);
   bot();
