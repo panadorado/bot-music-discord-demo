@@ -7,6 +7,8 @@ const formatTimeRange = (timeRange) => {
     const hours = Math.floor(timeRange / 3600);
     const minutes = Math.floor((timeRange - hours * 3600) / 60);
     const seconds = timeRange - hours * 3600 - minutes * 60;
-    return hours + ':' + minutes + ':' + seconds;
+    if (hours > 0)
+        return hours + ':' + minutes + ':' + seconds;
+    return minutes + ':' + seconds;
 };
 exports.formatTimeRange = formatTimeRange;

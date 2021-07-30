@@ -12,9 +12,9 @@ import resume from './actions/resume';
 import stop from './actions/stop';
 import clear from './actions/clear';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT ?? 3000;
 const server = express();
-const url = process.env.URL; // Đường dẫn của app bạn trên Heroku
+const url = 'https://bot-music-discord-demo.herokuapp.com/'; // Đường dẫn của app bạn trên Heroku
 
 const bot = (): void => {
   const client = new Client();
@@ -77,7 +77,7 @@ const bot = (): void => {
 server.disable('x-powered-by');
 
 server.listen(port, () => {
-  bot();
   herokuAwake(url);
+  bot();
   console.log(`🚀 Server is running on port ${port} ✨`);
 });
