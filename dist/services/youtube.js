@@ -20,7 +20,7 @@ const regex_1 = require("../constant/regex");
 // Tìm video bằng từ khoá và trả về id video nếu tìm thấy hoặc trả về tin nhắn lỗi.
 const searchVideo = (keyword) => {
     try {
-        return ytsr_1.default(keyword, { pages: 1 })
+        return (0, ytsr_1.default)(keyword, { pages: 1 })
             .then((result) => {
             const filteredRes = result.items.filter((e) => e.type === 'video');
             if (filteredRes.length === 0)
@@ -67,7 +67,7 @@ exports.getVideoDetails = getVideoDetails;
 const getPlaylist = (url) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = url.split('?')[1].split('=')[1];
-        const playlist = yield ytpl_1.default(id);
+        const playlist = yield (0, ytpl_1.default)(id);
         const resources = [];
         playlist.items.forEach((item) => {
             resources.push({

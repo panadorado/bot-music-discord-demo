@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
-dotenv_1.config();
+(0, dotenv_1.config)();
 const express_1 = __importDefault(require("express"));
 const heroku_awake_1 = __importDefault(require("heroku-awake"));
 const discord_js_1 = require("discord.js");
@@ -17,7 +17,7 @@ const resume_1 = __importDefault(require("./actions/resume"));
 const stop_1 = __importDefault(require("./actions/stop"));
 const clear_1 = __importDefault(require("./actions/clear"));
 const port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
-const server = express_1.default();
+const server = (0, express_1.default)();
 const url = 'https://bot-music-discord-demo.herokuapp.com/'; // Đường dẫn của app bạn trên Heroku
 const bot = () => {
     const client = new discord_js_1.Client();
@@ -75,7 +75,7 @@ server.get('/', (req, res) => {
     res.send('🏃‍♀️ Super Sick is online! 💨');
 });
 server.listen(port, () => {
-    heroku_awake_1.default(url);
+    (0, heroku_awake_1.default)(url);
     bot();
     console.log(`🚀 Server is running on port ${port} ✨`);
 });

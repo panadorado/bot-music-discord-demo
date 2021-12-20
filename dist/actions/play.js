@@ -17,7 +17,7 @@ const play = (connection, message) => {
         song,
         startedAt: new Date().getTime(),
     };
-    server.dispatcher = connection.play(ytdl_core_1.default(song.resource.url, { filter: 'audioonly' }));
+    server.dispatcher = connection.play((0, ytdl_core_1.default)(song.resource.url, { filter: 'audioonly' }));
     server.queue.shift();
     // Phát hiện việc bài hát kết thúc
     server.dispatcher.on('finish', () => {
@@ -45,7 +45,7 @@ exports.default = {
             const server = server_1.servers[message.guild.id];
             const paths = content.match(regex_1.youtubePlaylistRegex);
             if (paths) {
-                youtube_1.getPlaylist(paths[0])
+                (0, youtube_1.getPlaylist)(paths[0])
                     .then((result) => {
                     const resources = result.resources;
                     resources.forEach((resource) => {
@@ -81,7 +81,7 @@ exports.default = {
                 });
             }
             else
-                youtube_1.getVideoDetails(content)
+                (0, youtube_1.getVideoDetails)(content)
                     .then((result) => {
                     server.queue.push({
                         requester: message.member.displayName,
@@ -94,7 +94,7 @@ exports.default = {
                         .setThumbnail(result.thumbnail)
                         .addFields({ name: 'Kênh', value: result.author, inline: true }, {
                         name: 'Thời lượng',
-                        value: time_1.formatTimeRange(result.length),
+                        value: (0, time_1.formatTimeRange)(result.length),
                         inline: true,
                     })
                         .addField('Tổng video trong hàng đợi', server.queue.length, true);

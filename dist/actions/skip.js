@@ -23,7 +23,7 @@ exports.default = {
                         .setThumbnail(song.resource.thumbnail)
                         .addFields({ name: 'Kênh', value: song.resource.author, inline: true }, {
                         name: 'Thời lượng',
-                        value: time_1.formatTimeRange(song.resource.length),
+                        value: (0, time_1.formatTimeRange)(song.resource.length),
                         inline: true,
                     });
                     message.channel
